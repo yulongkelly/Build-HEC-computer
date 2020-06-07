@@ -13,5 +13,16 @@ CHIP Xor {
     OUT out;
 
     PARTS:
-    // Put your code here:
+    Nand(a=a, b=a, out=nota); 
+    Nand(a=b, b=b, out=notb); 
+    // a and not b
+    Nand(a=a, b=notb, out=temp);
+    Nand(a=temp, b=temp, out=aAndNotb);
+    // not a and b
+    Nand(a=nota, b=b, out=temp2);
+    Nand(a=temp2, b=temp2, out=notaAndb);
+    // (a and not b) or (not a and b)
+    Nand(a=aAndNotb, b=aAndNotb, out=temp3); 
+    Nand(a=notaAndb, b=notaAndb, out=temp4); 
+    Nand(a=temp3, b=temp4, out=out);
 }
