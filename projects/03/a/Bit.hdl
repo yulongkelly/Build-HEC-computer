@@ -14,5 +14,8 @@ CHIP Bit {
     OUT out;
 
     PARTS:
-    // Put your code here:
+    Mux(a=outtp1, b=in, sel=load, out=dffin);
+    DFF(in=dffin, out=outtp1);// Dff will always output the previous input state (if in=outtp1, out=outt);
+    Or(a=outtp1, b=outtp1, out=out);
+
 }
