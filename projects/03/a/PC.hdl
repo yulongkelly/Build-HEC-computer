@@ -16,5 +16,12 @@ CHIP PC {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    Mux16(a=outload, b=false, sel=reset, out=newout);// tick
+    Mux16(a=outinc, b=in, sel=load, out=outload);// tick    
+    Mux16(a=originalout, b=outtplus1, sel=inc, out=outinc);//tick
+    Or(a=inc, b=load, out=incOrload);// tick
+    Or(a=incOrload, b=reset, out=flags);// tick
+    Register(in=newout, load=flags, out=originalout);//tock
+    Inc16(in=originalout, out=outtplus1); // in the tick time block, the originalout is out[t]
+    Or16(a=originalout, b=originalout, out=out);// tock, the orignalout change to newout
 }
